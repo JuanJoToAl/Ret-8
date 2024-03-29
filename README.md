@@ -126,54 +126,46 @@ $$e^x \approx exp(x,n) \approx \sum_{i=0}^{n}\frac{x^i}{i!}$$
 # Importamos módulo math (funciones matemáticas)
 import math
 
-# Se define la función diferencia entre función exponencial y su aproximación
-def diferencia(exponente: float, termino: float) -> None:
+# Se crea variable para almacenar suma de la serie de Taylor
+sumatoria_aprox: float = 0
 
-    # Se crea variable para almacenar suma de la serie de Taylor
-    sumatoria_aprox: float = 0
+# Solicitud: valor del exponente
+exponente = float(input("Ingrese el valor del exponente de e: "))
 
-    # Función exponencial evaluada en el exponente
-    resultado = math.exp(float(exponente))
+# Solicitud: número del término
+termino = int(input("Ingrese el número del término: "))
 
-    # Bucle: cálculo de la suma de la serie de Taylor
-    for i in range(termino + 1):
-        sumatoria_aprox += exponente**i / math.factorial(i)
+# Función exponencial evaluada en el exponente
+resultado = math.exp(float(exponente))
 
-    # Diferencia entre valor real y aproximación
+# Bucle: cálculo de la suma de la serie de Taylor
+for i in range(termino + 1):
+    sumatoria_aprox += exponente**i / math.factorial(i)
+
+# Diferencia entre valor real y aproximación
+diferencia_x = resultado - sumatoria_aprox
+
+# Se calcula el error porcentual relativo
+error = abs(diferencia_x / resultado) * 100
+
+# Impresión: valor aproximado
+print(f"Valor aprox. función en término ({termino}): {sumatoria_aprox}")
+
+# Impresión: valor real
+print(f"Valor real función: {resultado}")
+
+# Impresión: diferencia absoluta
+print(f"Diferencia absoluta entre valor real y aprox.: {abs(diferencia_x)}")
+
+# Bucle: iteración hasta error < 0.1%
+while error >= 0.1:
+    termino += 1
+    sumatoria_aprox += exponente**termino / math.factorial(termino)
     diferencia_x = resultado - sumatoria_aprox
-
-    # Se calcula el error porcentual relativo
     error = abs(diferencia_x / resultado) * 100
 
-    # Impresión: valor aproximado
-    print(f"Valor aprox. función en término ({termino}): {sumatoria_aprox}")
-
-    # Impresión: valor real
-    print(f"Valor real función: {resultado}")
-
-    # Impresión: diferencia absoluta
-    print(f"Diferencia absoluta entre valor real y aprox.: {abs(diferencia_x)}")
-
-    # Bucle: iteración hasta error < 0.1%
-    while error >= 0.1:
-        termino += 1
-        sumatoria_aprox += exponente**termino / math.factorial(termino)
-        diferencia_x = resultado - sumatoria_aprox
-        error = abs(diferencia_x / resultado) * 100
-
-    # Impresión: términos para error < 0.1%
-    print(f"Se obtiene menos del 0.1% error con {termino} términos.")
-
-if __name__ == "__main__":
-
-    # Solicitud: valor del exponente
-    exponente = float(input("Ingrese el valor del exponente de e: "))
-
-    # Solicitud: número del término
-    termino = int(input("Ingrese el número del término: "))
-
-    # Llamada a la función
-    diferencia(exponente, termino)
+# Impresión: términos para error < 0.1%
+print(f"Se obtiene menos del 0.1% error con {termino} términos.")
 ```
 
 ### 9. Diseñar una función que permita calcular una aproximación de la función seno alrededor de 0 para cualquier valor x (real), utilizando los primeros n términos de la serie de Maclaurin. **Nota:** use *math* para traer la función seno y mostrar la diferencia entre el valor real y la aproximación.
@@ -186,55 +178,46 @@ $$sin(x) \approx sin(x,n) \approx \sum_{i=0}^{n} (-1)^i \frac{x^{2i+1}}{(2i+1)!}
 # Importamos módulo math (funciones matemáticas)
 import math
 
-# Función: diferencia entre función seno y su aproximación por serie de Taylor
-def diferencia(variable: float, termino: int) -> None:
+# Variable: suma de la serie de Taylor
+suma_aprox: float = 0
+    
+# Solicitud: valor de la variable
+variable = float(input("Ingrese valor variable para evaluar seno: "))
 
-    # Variable: suma de la serie de Taylor
-    suma_aprox: float = 0
+# Solicitud: número del término
+termino = int(input("Ingrese el número del término: "))
 
-    # Función seno evaluada en la variable
-    resultado = math.sin(float(variable))
+# Función seno evaluada en la variable
+resultado = math.sin(float(variable))
 
-    # Bucle: cálculo de la suma de la serie de Taylor
-    for i in range(termino + 1):
-        suma_aprox += (-1) ** i * (variable ** (2 * i + 1)) / math.factorial(2 * i + 1)
+# Bucle: cálculo de la suma de la serie de Taylor
+for i in range(termino + 1):
+    suma_aprox += (-1) ** i * (variable ** (2 * i + 1)) / math.factorial(2 * i + 1)
 
-    # Diferencia entre valor real y aproximación
+# Diferencia entre valor real y aproximación
+diferencia_x = resultado - suma_aprox
+
+# Error porcentual relativo
+error = abs(diferencia_x / resultado) * 100
+
+# Impresión: valor aproximado
+print(f"Valor aprox. función en término ({termino}): {suma_aprox}")
+
+# Impresión: valor real
+print(f"Valor real función: {resultado}")
+
+# Impresión: diferencia absoluta
+print(f"Diferencia absoluta entre valor real y aprox.: {abs(diferencia_x)}")
+
+# Bucle: iteración hasta error < 0.1%
+while error >= 0.1:
+    termino += 1
+    suma_aprox += (-1) ** termino * (variable ** (2 * termino + 1)) / math.factorial(2 * termino + 1)
     diferencia_x = resultado - suma_aprox
-
-    # Error porcentual relativo
     error = abs(diferencia_x / resultado) * 100
 
-    # Impresión: valor aproximado
-    print(f"Valor aprox. función en término ({termino}): {suma_aprox}")
-
-    # Impresión: valor real
-    print(f"Valor real función: {resultado}")
-
-    # Impresión: diferencia absoluta
-    print(f"Diferencia absoluta entre valor real y aprox.: {abs(diferencia_x)}")
-
-    # Bucle: iteración hasta error < 0.1%
-    while error >= 0.1:
-        termino += 1
-        suma_aprox += (-1) ** termino * (variable ** (2 * termino + 1)) / math.factorial(2 * termino + 1)
-        diferencia_x = resultado - suma_aprox
-        error = abs(diferencia_x / resultado) * 100
-
-    # Impresión: términos para error < 0.1%
-    print(f"Se obtiene menos del 0.1% error con {termino} términos.")
-
-
-if __name__ == "__main__":
-
-    # Solicitud: valor de la variable
-    variable = float(input("Ingrese valor variable para evaluar seno: "))
-
-    # Solicitud: número del término
-    termino = int(input("Ingrese el número del término: "))
-
-    # Llamada a la función
-    diferencia(variable, termino)
+# Impresión: términos para error < 0.1%
+print(f"Se obtiene menos del 0.1% error con {termino} términos.")
 ```
 
 ### 10. Diseñar una función que permita calcular una aproximación de la función arcotangente alrededor de 0 para cualquier valor x en el rango [-1, 1], utilizando los primeros n términos de la serie de Maclaurin. **Nota:** use *math* para traer la función arctan y mostrar la diferencia entre el valor real y la aproximación.
@@ -247,23 +230,18 @@ $$arctan(x) \approx arctan(x,n) \approx \sum_{i=0}^{n} (-1)^i \frac{x^{2i+1}}{(2
 # Importa módulo math (funciones matemáticas)
 import math
 
-# Función: verifica si la variable está en el rango [-1, 1]
-def condicion(variable: float, termino: int) -> None:
+# Solicitud: valor de la variable
+variable = float(input("Ingrese valor variable en el rango [-1, 1]: "))
 
-    # Valida rango de la variable
-    if -1 <= variable <= 1:
-        # Llama a la función diferencia si está en el rango
-        diferencia(variable, termino)
-    else:
-        # Imprime mensaje de error si no está en el rango
-        print("El valor de la variable no está en el rango [-1, 1]")
+# Solicitud: número del término
+termino = int(input("Ingrese el número del término: "))
 
-# Función: calcula la diferencia entre la función atan y su aproximación
-def diferencia(variable: float, termino: int) -> None:
-
+# Valida rango de la variable
+if -1 <= variable <= 1:
+    
     # Variable: suma de la serie de Taylor
     sumatoria_aprox: float = 0
-
+    
     # Función atan evaluada en la variable
     resultado = math.atan(float(variable))
 
@@ -295,16 +273,8 @@ def diferencia(variable: float, termino: int) -> None:
 
     # Impresión: términos para error < 0.1%
     print(f"Se obtiene menos del 0.1% error con {termino} términos.")
-
-
-if __name__ == "__main__":
-
-    # Solicitud: valor de la variable
-    variable = float(input("Ingrese valor variable en el rango [-1, 1]: "))
-
-    # Solicitud: número del término
-    termino = int(input("Ingrese el número del término: "))
-
-    # Llamada a la función
-    condicion(variable, termino)
+    
+else:
+    # Imprime mensaje de error si no está en el rango
+    print("El valor de la variable no está en el rango [-1, 1]")
 ```
